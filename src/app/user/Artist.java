@@ -1,12 +1,15 @@
 package app.user;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import app.audio.Collections.Album;
 import app.audio.Collections.AlbumOutput;
 import app.audio.Files.Song;
 import app.pages.ArtistPage;
+import lombok.Getter;
 
 /**
  * The type Artist.
@@ -15,6 +18,18 @@ public final class Artist extends ContentCreator {
     private ArrayList<Album> albums;
     private ArrayList<Merchandise> merch;
     private ArrayList<Event> events;
+
+    @Getter
+    private HashMap<Album, Integer> topAlbums = new HashMap<>();
+    @Getter
+    private HashMap<Song, Integer> topSongs = new HashMap<>();
+    @Getter
+    private HashMap<User, Integer> topFans = new HashMap<>();
+    @Getter
+    private HashMap<User, Boolean> uniqueListeners = new HashMap<>();
+    @Getter
+    private Integer listeners;
+
 
     /**
      * Instantiates a new Artist.
@@ -124,5 +139,18 @@ public final class Artist extends ContentCreator {
      */
     public String userType() {
         return "artist";
+    }
+    public void listenSong(Song song) {
+        topSongs.put(song, topSongs.getOrDefault(song, 0) + 1);
+    }
+    public void listenAlbum(Album album) {
+        topAlbums.put(album, topAlbums.getOrDefault(album, 0) + 1);
+    }
+    public void listenUser(User user) {
+        topFans.put(user, topFans.getOrDefault(user, 0) + 1);
+        if (!uniqueListeners.containsKey(user)) {
+            uniqueListeners.put(user, true);
+            listeners++;
+        }
     }
 }

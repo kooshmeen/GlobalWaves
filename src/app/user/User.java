@@ -1,9 +1,11 @@
 package app.user;
 
+import app.audio.Collections.Album;
 import app.audio.Collections.AudioCollection;
 import app.audio.Collections.Playlist;
 import app.audio.Collections.PlaylistOutput;
 import app.audio.Files.AudioFile;
+import app.audio.Files.Episode;
 import app.audio.Files.Song;
 import app.audio.LibraryEntry;
 import app.pages.HomePage;
@@ -18,6 +20,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -45,6 +48,17 @@ public final class User extends UserAbstract {
     @Getter
     @Setter
     private LikedContentPage likedContentPage;
+
+    @Getter
+    private HashMap<Song, Integer> topSongs = new HashMap<>();
+    @Getter
+    private HashMap<Artist, Integer> topArtists = new HashMap<>();
+    @Getter
+    private HashMap<Enums.Genre, Integer> topGenres = new HashMap<>();
+    @Getter
+    private HashMap<Album, Integer> topAlbums = new HashMap<>();
+    @Getter
+    private HashMap<Episode, Integer> topEpisodes = new HashMap<>();
 
     /**
      * Instantiates a new User.
@@ -588,5 +602,20 @@ public final class User extends UserAbstract {
         }
 
         player.simulatePlayer(time);
+    }
+    public void listenSong(Song song) {
+        topSongs.put(song, topSongs.getOrDefault(song, 0) + 1);
+    }
+    public void listenArtist(Artist artist) {
+        topArtists.put(artist, topArtists.getOrDefault(artist, 0) + 1);
+    }
+    public void listenGenre(Enums.Genre genre) {
+        topGenres.put(genre, topGenres.getOrDefault(genre, 0) + 1);
+    }
+    public void listenAlbum(Album album) {
+        topAlbums.put(album, topAlbums.getOrDefault(album, 0) + 1);
+    }
+    public void listenEpisode(Episode episode) {
+        topEpisodes.put(episode, topEpisodes.getOrDefault(episode, 0) + 1);
     }
 }

@@ -1,9 +1,12 @@
 package app.user;
 
 import app.audio.Collections.Podcast;
+import app.audio.Files.Episode;
 import app.pages.HostPage;
+import lombok.Getter;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * The type Host.
@@ -11,6 +14,14 @@ import java.util.ArrayList;
 public final class Host extends ContentCreator {
     private ArrayList<Podcast> podcasts;
     private ArrayList<Announcement> announcements;
+
+    @Getter
+    private HashMap<Episode, Integer> topEpisodes = new HashMap<>();
+    @Getter
+    private HashMap<User, Boolean> uniqueListeners = new HashMap<>();
+    @Getter
+    private Integer listeners;
+
 
     /**
      * Instantiates a new Host.
@@ -98,5 +109,15 @@ public final class Host extends ContentCreator {
     @Override
     public String userType() {
         return "host";
+    }
+
+    public void listenedEpisode(Episode episode) {
+        topEpisodes.put(episode, topEpisodes.getOrDefault(episode, 0) + 1);
+    }
+    public void listenedUser(User user) {
+        if (!uniqueListeners.containsKey(user)) {
+            uniqueListeners.put(user, true);
+            listeners++;
+        }
     }
 }

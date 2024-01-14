@@ -136,6 +136,19 @@ public final class Main {
                 case "getOnlineUsers" -> outputs.add(CommandRunner.getOnlineUsers(command));
                 case "showAlbums" -> outputs.add(CommandRunner.showAlbums(command));
                 case "showPodcasts" -> outputs.add(CommandRunner.showPodcasts(command));
+                case "wrapped" -> System.out.print("");
+                case "adBreak" -> System.out.print("");
+                case "buyPremium" -> System.out.print("");
+                case "cancelPremium" -> System.out.print("");
+                case "subscribe" -> System.out.print("");
+                case "getNotifications" -> System.out.print("");
+                case "previousPage" -> System.out.print("");
+                case "nextPage" -> System.out.print("");
+                case "loadRecommendations" -> System.out.print("");
+                case "updateRecommendations" -> System.out.print("");
+                case "buyMerch" -> System.out.print("");
+                case "seeMerch" -> System.out.print("");
+
                 default -> System.out.println("Invalid command " + commandName);
             }
         }
