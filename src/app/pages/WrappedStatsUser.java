@@ -13,20 +13,20 @@ import java.util.HashMap;
 
 public class WrappedStatsUser {
     @Getter
-    private HashMap<Album, Integer> topAlbums = new HashMap<>();
+    private HashMap<String, Integer> topAlbums = new HashMap<>();
     @Getter
-    private HashMap<Song, Integer> topSongs = new HashMap<>();
+    private HashMap<String, Integer> topSongs = new HashMap<>();
     @Getter
-    private HashMap<Artist, Integer> topArtists = new HashMap<>();
+    private HashMap<String, Integer> topArtists = new HashMap<>();
     @Getter
     private HashMap<Episode, Integer> topEpisodes = new HashMap<>();
     @Getter
-    private HashMap<Enums.Genre, Integer> topGenres = new HashMap<>();
-    public WrappedStatsUser(HashMap<Album, Integer> topAlbums,
-                              HashMap<Song, Integer> topSongs,
-                              HashMap<Artist, Integer> topArtists,
+    private HashMap<String, Integer> topGenres = new HashMap<>();
+    public WrappedStatsUser(HashMap<String, Integer> topAlbums,
+                              HashMap<String, Integer> topSongs,
+                              HashMap<String, Integer> topArtists,
                               HashMap<Episode, Integer> topEpisodes,
-                              HashMap<Enums.Genre, Integer> topGenres) {
+                              HashMap<String, Integer> topGenres) {
         this.topAlbums = topAlbums;
         this.topSongs = topSongs;
         this.topArtists = topArtists;

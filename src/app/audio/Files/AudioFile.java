@@ -11,4 +11,6 @@ public abstract class AudioFile extends LibraryEntry {
         super(name);
         this.duration = duration;
     }
+
+    public abstract void accept(AudioFileVisitor visitor);
 }

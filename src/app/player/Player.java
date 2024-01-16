@@ -2,7 +2,9 @@ package app.player;
 
 import app.audio.Collections.AudioCollection;
 import app.audio.Files.AudioFile;
+import app.audio.Files.Song;
 import app.audio.LibraryEntry;
+import app.user.User;
 import app.utils.Enums;
 import lombok.Getter;
 
@@ -168,12 +170,12 @@ public final class Player {
      *
      * @param time the time
      */
-    public void simulatePlayer(final int time) {
+    public void simulatePlayer(final int time, final User user) {
         int elapsedTime = time;
         if (!paused) {
             while (elapsedTime >= source.getDuration()) {
                 elapsedTime -= source.getDuration();
-                next();
+                next(user);
                 if (paused) {
                     break;
                 }
@@ -187,8 +189,14 @@ public final class Player {
     /**
      * Next.
      */
-    public void next() {
+    public void next(final User user) {
         paused = source.setNextAudioFile(repeatMode, shuffle);
+        if (source.getType() == Enums.PlayerSourceType.PODCAST) {
+            //user.listenPodcast(source.getAudioCollection());
+        } else {
+            Song song = (Song) source.getAudioFile();
+
+        }
         if (repeatMode == Enums.RepeatMode.REPEAT_ONCE) {
             repeatMode = Enums.RepeatMode.NO_REPEAT;
         }

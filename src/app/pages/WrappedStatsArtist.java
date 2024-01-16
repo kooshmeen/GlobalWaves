@@ -10,9 +10,9 @@ import java.util.HashMap;
 
 public class WrappedStatsArtist {
     @Getter
-    private HashMap<Album, Integer> topAlbums = new HashMap<>();
+    private HashMap<String, Integer> topAlbums = new HashMap<>();
     @Getter
-    private HashMap<Song, Integer> topSongs = new HashMap<>();
+    private HashMap<String, Integer> topSongs = new HashMap<>();
     @Getter
     private HashMap<User, Integer> topFans = new HashMap<>();
     @Getter
@@ -20,8 +20,8 @@ public class WrappedStatsArtist {
     private HashMap<User, Boolean> uniqueListeners = new HashMap<>();
     @Getter
     private Integer listeners;
-    public WrappedStatsArtist(HashMap<Album, Integer> topAlbums,
-                              HashMap<Song, Integer> topSongs,
+    public WrappedStatsArtist(HashMap<String, Integer> topAlbums,
+                              HashMap<String, Integer> topSongs,
                               HashMap<User, Integer> topFans,
                               HashMap<User, Boolean> uniqueListeners,
                               Integer listeners) {

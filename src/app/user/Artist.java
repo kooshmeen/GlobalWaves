@@ -21,9 +21,9 @@ public final class Artist extends ContentCreator {
     private ArrayList<Event> events;
 
     @Getter
-    private HashMap<Album, Integer> topAlbums = new HashMap<>();
+    private HashMap<String, Integer> topAlbums = new HashMap<>();
     @Getter
-    private HashMap<Song, Integer> topSongs = new HashMap<>();
+    private HashMap<String, Integer> topSongs = new HashMap<>();
     @Getter
     private HashMap<User, Integer> topFans = new HashMap<>();
     @Getter
@@ -142,10 +142,10 @@ public final class Artist extends ContentCreator {
         return "artist";
     }
     public void listenSong(Song song) {
-        topSongs.put(song, topSongs.getOrDefault(song, 0) + 1);
+        topSongs.put(song.getName(), topSongs.getOrDefault(song, 0) + 1);
     }
     public void listenAlbum(Album album) {
-        topAlbums.put(album, topAlbums.getOrDefault(album, 0) + 1);
+        topAlbums.put(album.getName(), topAlbums.getOrDefault(album, 0) + 1);
     }
     public void listenUser(User user) {
         topFans.put(user, topFans.getOrDefault(user, 0) + 1);

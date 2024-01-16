@@ -10,4 +10,9 @@ public final class Episode extends AudioFile {
         super(name, duration);
         this.description = description;
     }
+
+    @Override
+    public void accept(AudioFileVisitor visitor) {
+        visitor.visit(this);
+    }
 }

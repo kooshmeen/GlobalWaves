@@ -5,6 +5,7 @@ import app.audio.Collections.AudioCollection;
 import app.audio.Collections.Playlist;
 import app.audio.Collections.PlaylistOutput;
 import app.audio.Files.AudioFile;
+import app.audio.Files.AudioFileVisitor;
 import app.audio.Files.Episode;
 import app.audio.Files.Song;
 import app.audio.LibraryEntry;
@@ -26,7 +27,7 @@ import java.util.List;
 /**
  * The type User.
  */
-public final class User extends UserAbstract {
+public final class User extends UserAbstract implements AudioFileVisitor {
     @Getter
     private ArrayList<Playlist> playlists;
     @Getter
@@ -50,15 +51,32 @@ public final class User extends UserAbstract {
     private LikedContentPage likedContentPage;
 
     @Getter
-    private HashMap<Song, Integer> topSongs = new HashMap<>();
+    private HashMap<String, Integer> topSongs = new HashMap<>();
     @Getter
-    private HashMap<Artist, Integer> topArtists = new HashMap<>();
+    private HashMap<String, Integer> topArtists = new HashMap<>();
     @Getter
-    private HashMap<Enums.Genre, Integer> topGenres = new HashMap<>();
+    private HashMap<String, Integer> topGenres = new HashMap<>();
     @Getter
-    private HashMap<Album, Integer> topAlbums = new HashMap<>();
+    private HashMap<String, Integer> topAlbums = new HashMap<>();
     @Getter
     private HashMap<Episode, Integer> topEpisodes = new HashMap<>();
+
+    @Override
+    public void visit(final Song song) {
+        listenSong(song);
+        String album = song.getAlbum();
+        String artist = song.getArtist();
+        String genre = song.getGenre();
+        listenAlbum(album);
+        listenArtist(artist);
+        listenGenre(genre);
+
+    }
+
+    @Override
+    public void visit(Episode episode) {
+        listenEpisode(episode);
+    }
 
     /**
      * Instantiates a new User.
@@ -180,7 +198,8 @@ public final class User extends UserAbstract {
 
         player.pause();
 
-
+        AudioFile currentAudioFile = player.getCurrentAudioFile();
+        currentAudioFile.accept(this);
 
         return "Playback loaded successfully.";
     }
@@ -370,7 +389,7 @@ public final class User extends UserAbstract {
             return "Please load a source before skipping to the next track.";
         }
 
-        player.next();
+        player.next(this);
 
         if (player.getCurrentAudioFile() == null) {
             return "Please load a source before skipping to the next track.";
@@ -603,18 +622,18 @@ public final class User extends UserAbstract {
             return;
         }
 
-        player.simulatePlayer(time);
+        player.simulatePlayer(time, this);
     }
     public void listenSong(Song song) {
-        topSongs.put(song, topSongs.getOrDefault(song, 0) + 1);
+        topSongs.put(song.getName(), topSongs.getOrDefault(song, 0) + 1);
     }
-    public void listenArtist(Artist artist) {
+    public void listenArtist(String artist) {
         topArtists.put(artist, topArtists.getOrDefault(artist, 0) + 1);
     }
-    public void listenGenre(Enums.Genre genre) {
+    public void listenGenre(String genre) {
         topGenres.put(genre, topGenres.getOrDefault(genre, 0) + 1);
     }
-    public void listenAlbum(Album album) {
+    public void listenAlbum(String album) {
         topAlbums.put(album, topAlbums.getOrDefault(album, 0) + 1);
     }
     public void listenEpisode(Episode episode) {

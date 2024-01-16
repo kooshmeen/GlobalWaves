@@ -105,4 +105,9 @@ public final class Song extends AudioFile {
     public void dislike() {
         likes--;
     }
+
+    @Override
+    public void accept(final AudioFileVisitor visitor) {
+        visitor.visit(this);
+    }
 }
