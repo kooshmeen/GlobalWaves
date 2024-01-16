@@ -3,13 +3,11 @@ package app.user;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import app.audio.Collections.Album;
 import app.audio.Collections.AlbumOutput;
 import app.audio.Files.Song;
 import app.pages.ArtistPage;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 
 /**
@@ -142,13 +140,13 @@ public final class Artist extends ContentCreator {
     public String userType() {
         return "artist";
     }
-    public void listenSong(Song song) {
+    public void listenSong(final Song song) {
         topSongs.put(song.getName(), topSongs.getOrDefault(song.getName(), 0) + 1);
     }
-    public void listenAlbum(String album) {
+    public void listenAlbum(final String album) {
         topAlbums.put(album, topAlbums.getOrDefault(album, 0) + 1);
     }
-    public void listenUser(User user) {
+    public void listenUser(final User user) {
         topFans.put(user.getUsername(), topFans.getOrDefault(user, 0) + 1);
         if (!uniqueListeners.containsKey(user)) {
             uniqueListeners.put(user, true);

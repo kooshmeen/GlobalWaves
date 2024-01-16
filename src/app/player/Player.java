@@ -193,9 +193,8 @@ public final class Player {
      */
     public void next(final User user) {
         paused = source.setNextAudioFile(repeatMode, shuffle);
-        if (source.getType() == Enums.PlayerSourceType.PODCAST) {
-            //user.listenPodcast(source.getAudioCollection());
-        } else if (source.getDuration() > 0 && !paused){
+        if (source.getType() != Enums.PlayerSourceType.PODCAST
+                && source.getDuration() > 0 && !paused) {
             Song song = (Song) source.getAudioFile();
             user.listenSong(song);
             String album = song.getAlbum();

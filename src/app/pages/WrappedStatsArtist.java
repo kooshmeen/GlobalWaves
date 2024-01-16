@@ -1,7 +1,5 @@
 package app.pages;
 
-import app.audio.Collections.Album;
-import app.audio.Files.Song;
 import app.user.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
@@ -24,11 +22,12 @@ public class WrappedStatsArtist {
     private HashMap<User, Boolean> uniqueListeners = new HashMap<>();
     @Getter
     private Integer listeners;
-    public WrappedStatsArtist(HashMap<String, Integer> topAlbums,
-                              HashMap<String, Integer> topSongs,
-                              HashMap<String, Integer> topFans,
-                              HashMap<User, Boolean> uniqueListeners,
-                              Integer listeners) {
+    private int maxItems = 5;
+    public WrappedStatsArtist(final HashMap<String, Integer> topAlbums,
+                             final HashMap<String, Integer> topSongs,
+                             final HashMap<String, Integer> topFans,
+                             final HashMap<User, Boolean> uniqueListeners,
+                             final Integer listeners) {
         this.topAlbums = getTopAlbums(topAlbums);
         this.topSongs = getTopSongs(topSongs);
         this.topFans = getTopFans(topFans);
@@ -36,31 +35,31 @@ public class WrappedStatsArtist {
         this.listeners = listeners;
     }
 
-    private HashMap<String, Integer> getTopSongs(HashMap<String, Integer> songs) {
+    private HashMap<String, Integer> getTopSongs(final HashMap<String, Integer> songs) {
         return songs.entrySet().stream()
                 .sorted(Map.Entry.comparingByKey())
                 .sorted(Map.Entry.<String, Integer>comparingByValue().reversed())
-                .limit(5)
+                .limit(maxItems)
                 .collect(Collectors.toMap(
                         entry -> entry.getKey(),
                         entry -> entry.getValue(),
                         (oldValue, newValue) -> oldValue, LinkedHashMap::new));
     }
 
-    private ArrayList<String> getTopFans(HashMap<String, Integer> fans) {
+    private ArrayList<String> getTopFans(final HashMap<String, Integer> fans) {
         return fans.entrySet().stream()
                 .sorted(Map.Entry.comparingByKey())
                 .sorted(Map.Entry.<String, Integer>comparingByValue().reversed())
-                .limit(5)
+                .limit(maxItems)
                 .map(Map.Entry::getKey)
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
-    private HashMap<String, Integer> getTopAlbums(HashMap<String, Integer> albums) {
+    private HashMap<String, Integer> getTopAlbums(final HashMap<String, Integer> albums) {
         return albums.entrySet().stream()
                 .sorted(Map.Entry.comparingByKey())
                 .sorted(Map.Entry.<String, Integer>comparingByValue().reversed())
-                .limit(5)
+                .limit(maxItems)
                 .collect(Collectors.toMap(
                         entry -> entry.getKey(),
                         entry -> entry.getValue(),

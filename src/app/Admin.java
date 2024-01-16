@@ -17,7 +17,6 @@ import app.user.Host;
 import app.user.Merchandise;
 import app.user.User;
 import app.user.UserAbstract;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import fileio.input.CommandInput;
 import fileio.input.EpisodeInput;
 import fileio.input.PodcastInput;
@@ -878,6 +877,11 @@ public final class Admin {
         return topPlaylists;
     }
 
+    /**
+     * Gets wrapped stats for an artist
+     *
+     * @return the stats
+     */
     public WrappedStatsArtist wrappedArtist(final String username) {
         UserAbstract currentUser = getAbstractUser(username);
         Artist artist = (Artist) currentUser;
@@ -889,6 +893,11 @@ public final class Admin {
         return stats;
     }
 
+    /**
+     * Gets wrapped stats for a user
+     *
+     * @return the stats
+     */
     public WrappedStatsUser wrappedUser(final String username) {
         UserAbstract currentUser = getAbstractUser(username);
         User user = (User) currentUser;

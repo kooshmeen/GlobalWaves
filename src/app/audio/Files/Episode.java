@@ -12,7 +12,7 @@ public final class Episode extends AudioFile {
     }
 
     @Override
-    public void accept(AudioFileVisitor visitor) {
+    public void accept(final AudioFileVisitor visitor) {
         visitor.visit(this);
     }
 }
