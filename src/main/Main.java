@@ -137,6 +137,7 @@ public final class Main {
                 case "showAlbums" -> outputs.add(CommandRunner.showAlbums(command));
                 case "showPodcasts" -> outputs.add(CommandRunner.showPodcasts(command));
                 case "wrapped" -> outputs.add(CommandRunner.wrapped(command));
+                case "endProgram" -> outputs.add(CommandRunner.endProgram(command));
                 case "adBreak" -> System.out.print("");
                 case "buyPremium" -> System.out.print("");
                 case "cancelPremium" -> System.out.print("");
@@ -148,7 +149,6 @@ public final class Main {
                 case "updateRecommendations" -> System.out.print("");
                 case "buyMerch" -> System.out.print("");
                 case "seeMerch" -> System.out.print("");
-                case "endProgram" -> outputs.add(CommandRunner.endProgram(command));
 
                 default -> System.out.println("Invalid command " + commandName);
             }

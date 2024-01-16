@@ -816,9 +816,9 @@ public final class CommandRunner {
         ObjectNode objectNode = objectMapper.createObjectNode();
         objectNode.put("command", commandInput.getCommand());
 
-        for (Artist artist : admin.getArtists()) {
-
-        }
+//        for (Artist artist : admin.getArtists()) {
+//
+//        }
 
         return objectNode;
     }

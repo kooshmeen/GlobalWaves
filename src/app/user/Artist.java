@@ -33,7 +33,6 @@ public final class Artist extends ContentCreator {
     @Getter
     private ArtistStats stats = new ArtistStats(1, 0, 0, "N/A");
 
-
     /**
      * Instantiates a new Artist.
      *
