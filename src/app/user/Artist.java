@@ -9,6 +9,7 @@ import app.audio.Collections.AlbumOutput;
 import app.audio.Files.Song;
 import app.pages.ArtistPage;
 import lombok.Getter;
+import lombok.Setter;
 
 /**
  * The type Artist.
@@ -30,6 +31,11 @@ public final class Artist extends ContentCreator {
     private Integer listeners = 0;
     @Getter
     private ArtistStats stats = new ArtistStats(1, 0, 0, "N/A");
+    @Getter
+    private Integer totalStreams = 0;
+    @Getter
+    @Setter
+    private Integer ranking = 0;
 
     /**
      * Instantiates a new Artist.
@@ -152,5 +158,9 @@ public final class Artist extends ContentCreator {
             uniqueListeners.put(user, true);
             listeners++;
         }
+    }
+
+    public void updateTotalStreams() {
+        totalStreams = topSongs.values().stream().mapToInt(Integer::intValue).sum();
     }
 }

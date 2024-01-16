@@ -15,6 +15,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import fileio.input.CommandInput;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -816,9 +817,35 @@ public final class CommandRunner {
         ObjectNode objectNode = objectMapper.createObjectNode();
         objectNode.put("command", commandInput.getCommand());
 
-//        for (Artist artist : admin.getArtists()) {
-//
-//        }
+        ObjectNode resultNode = objectMapper.createObjectNode();
+
+        for (Artist artist : admin.getArtists()) {
+            artist.updateTotalStreams();
+        }
+
+        ArrayList<Artist> artists = new ArrayList<>(admin.getArtists());
+        artists.sort(Comparator.comparing(Artist::getUsername));
+        int j = 1;
+        for (int i = 0; i < artists.size(); i++) {
+            if (artists.get(i).getTotalStreams() > 0) {
+                artists.get(i).setRanking(j);
+                j++;
+            }
+        }
+
+        for (Artist artist : admin.getArtists()) {
+            if (artist.getTotalStreams() > 0) {
+                ObjectNode artistNode = objectMapper.createObjectNode();
+                artistNode.put("merchRevenue", 0);
+                artistNode.put("mostProfitableSong", "N/A");
+                artistNode.put("ranking", artist.getRanking());
+                artistNode.put("songRevenue", 0);
+
+                resultNode.set(artist.getUsername(), artistNode);
+            }
+        }
+
+        objectNode.set("result", resultNode);
 
         return objectNode;
     }
