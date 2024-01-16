@@ -1,9 +1,11 @@
 package app.player;
 
+import app.Admin;
 import app.audio.Collections.AudioCollection;
 import app.audio.Files.AudioFile;
 import app.audio.Files.Song;
 import app.audio.LibraryEntry;
+import app.user.Artist;
 import app.user.User;
 import app.utils.Enums;
 import lombok.Getter;
@@ -193,9 +195,23 @@ public final class Player {
         paused = source.setNextAudioFile(repeatMode, shuffle);
         if (source.getType() == Enums.PlayerSourceType.PODCAST) {
             //user.listenPodcast(source.getAudioCollection());
-        } else {
+        } else if (source.getDuration() > 0 && !paused){
             Song song = (Song) source.getAudioFile();
+            user.listenSong(song);
+            String album = song.getAlbum();
+            String artist = song.getArtist();
+            String genre = song.getGenre();
+            user.listenAlbum(album);
+            user.listenArtist(artist);
+            user.listenGenre(genre);
 
+            for (Artist artist1 : Admin.getInstance().getArtists()) {
+                if (artist1.getUsername().equals(artist)) {
+                    artist1.listenSong(song);
+                    artist1.listenAlbum(album);
+                    artist1.listenUser(user);
+                }
+            }
         }
         if (repeatMode == Enums.RepeatMode.REPEAT_ONCE) {
             repeatMode = Enums.RepeatMode.NO_REPEAT;

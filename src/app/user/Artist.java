@@ -25,11 +25,11 @@ public final class Artist extends ContentCreator {
     @Getter
     private HashMap<String, Integer> topSongs = new HashMap<>();
     @Getter
-    private HashMap<User, Integer> topFans = new HashMap<>();
+    private HashMap<String, Integer> topFans = new HashMap<>();
     @Getter
     private HashMap<User, Boolean> uniqueListeners = new HashMap<>();
     @Getter
-    private Integer listeners;
+    private Integer listeners = 0;
 
 
     /**
@@ -142,13 +142,13 @@ public final class Artist extends ContentCreator {
         return "artist";
     }
     public void listenSong(Song song) {
-        topSongs.put(song.getName(), topSongs.getOrDefault(song, 0) + 1);
+        topSongs.put(song.getName(), topSongs.getOrDefault(song.getName(), 0) + 1);
     }
-    public void listenAlbum(Album album) {
-        topAlbums.put(album.getName(), topAlbums.getOrDefault(album, 0) + 1);
+    public void listenAlbum(String album) {
+        topAlbums.put(album, topAlbums.getOrDefault(album, 0) + 1);
     }
     public void listenUser(User user) {
-        topFans.put(user, topFans.getOrDefault(user, 0) + 1);
+        topFans.put(user.getUsername(), topFans.getOrDefault(user, 0) + 1);
         if (!uniqueListeners.containsKey(user)) {
             uniqueListeners.put(user, true);
             listeners++;

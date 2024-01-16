@@ -17,6 +17,7 @@ import app.player.PlayerStats;
 import app.searchBar.Filters;
 import app.searchBar.SearchBar;
 import app.utils.Enums;
+import app.Admin;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -71,6 +72,13 @@ public final class User extends UserAbstract implements AudioFileVisitor {
         listenArtist(artist);
         listenGenre(genre);
 
+        for (Artist artist1 : Admin.getInstance().getArtists()) {
+            if (artist1.getUsername().equals(artist)) {
+                artist1.listenSong(song);
+                artist1.listenAlbum(album);
+                artist1.listenUser(this);
+            }
+        }
     }
 
     @Override
@@ -625,7 +633,7 @@ public final class User extends UserAbstract implements AudioFileVisitor {
         player.simulatePlayer(time, this);
     }
     public void listenSong(Song song) {
-        topSongs.put(song.getName(), topSongs.getOrDefault(song, 0) + 1);
+        topSongs.put(song.getName(), topSongs.getOrDefault(song.getName(), 0) + 1);
     }
     public void listenArtist(String artist) {
         topArtists.put(artist, topArtists.getOrDefault(artist, 0) + 1);

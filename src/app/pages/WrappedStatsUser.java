@@ -7,9 +7,12 @@ import app.user.Artist;
 import app.user.User;
 import app.utils.Enums;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.util.LinkedHashMap;
 import lombok.Getter;
 
 import java.util.HashMap;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class WrappedStatsUser {
     @Getter
@@ -28,9 +31,20 @@ public class WrappedStatsUser {
                               HashMap<Episode, Integer> topEpisodes,
                               HashMap<String, Integer> topGenres) {
         this.topAlbums = topAlbums;
-        this.topSongs = topSongs;
+        this.topSongs = getTopSongs(topSongs);
         this.topArtists = topArtists;
         this.topEpisodes = topEpisodes;
         this.topGenres = topGenres;
+    }
+
+    private HashMap<String, Integer> getTopSongs(HashMap<String, Integer> songs) {
+        return songs.entrySet().stream()
+                .sorted(Map.Entry.comparingByKey())
+                .sorted(Map.Entry.<String, Integer>comparingByValue().reversed())
+                .limit(5)
+                .collect(Collectors.toMap(
+                        entry -> entry.getKey(),
+                        entry -> entry.getValue(),
+                        (oldValue, newValue) -> oldValue, LinkedHashMap::new));
     }
 }
