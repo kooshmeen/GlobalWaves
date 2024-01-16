@@ -60,7 +60,7 @@ public final class User extends UserAbstract implements AudioFileVisitor {
     @Getter
     private HashMap<String, Integer> topAlbums = new HashMap<>();
     @Getter
-    private HashMap<Episode, Integer> topEpisodes = new HashMap<>();
+    private HashMap<String, Integer> topEpisodes = new HashMap<>();
 
     @Override
     public void visit(final Song song) {
@@ -645,6 +645,6 @@ public final class User extends UserAbstract implements AudioFileVisitor {
         topAlbums.put(album, topAlbums.getOrDefault(album, 0) + 1);
     }
     public void listenEpisode(Episode episode) {
-        topEpisodes.put(episode, topEpisodes.getOrDefault(episode, 0) + 1);
+        topEpisodes.put(episode.getName(), topEpisodes.getOrDefault(episode.getName(), 0) + 1);
     }
 }

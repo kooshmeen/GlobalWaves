@@ -148,6 +148,7 @@ public final class Main {
                 case "updateRecommendations" -> System.out.print("");
                 case "buyMerch" -> System.out.print("");
                 case "seeMerch" -> System.out.print("");
+                case "endProgram" -> outputs.add(CommandRunner.endProgram(command));
 
                 default -> System.out.println("Invalid command " + commandName);
             }

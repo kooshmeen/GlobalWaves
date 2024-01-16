@@ -811,4 +811,15 @@ public final class CommandRunner {
         }
         return objectNode;
     }
+
+    public static ObjectNode endProgram (final CommandInput commandInput) {
+        ObjectNode objectNode = objectMapper.createObjectNode();
+        objectNode.put("command", commandInput.getCommand());
+
+        for (Artist artist : admin.getArtists()) {
+
+        }
+
+        return objectNode;
+    }
 }

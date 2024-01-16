@@ -30,6 +30,8 @@ public final class Artist extends ContentCreator {
     private HashMap<User, Boolean> uniqueListeners = new HashMap<>();
     @Getter
     private Integer listeners = 0;
+    @Getter
+    private ArtistStats stats = new ArtistStats(1, 0, 0, "N/A");
 
 
     /**

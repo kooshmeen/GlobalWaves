@@ -29,7 +29,7 @@ public class WrappedStatsArtist {
                               HashMap<String, Integer> topFans,
                               HashMap<User, Boolean> uniqueListeners,
                               Integer listeners) {
-        this.topAlbums = topAlbums;
+        this.topAlbums = getTopAlbums(topAlbums);
         this.topSongs = getTopSongs(topSongs);
         this.topFans = getTopFans(topFans);
         this.uniqueListeners = uniqueListeners;
@@ -54,5 +54,16 @@ public class WrappedStatsArtist {
                 .limit(5)
                 .map(Map.Entry::getKey)
                 .collect(Collectors.toCollection(ArrayList::new));
+    }
+
+    private HashMap<String, Integer> getTopAlbums(HashMap<String, Integer> albums) {
+        return albums.entrySet().stream()
+                .sorted(Map.Entry.comparingByKey())
+                .sorted(Map.Entry.<String, Integer>comparingByValue().reversed())
+                .limit(5)
+                .collect(Collectors.toMap(
+                        entry -> entry.getKey(),
+                        entry -> entry.getValue(),
+                        (oldValue, newValue) -> oldValue, LinkedHashMap::new));
     }
 }
