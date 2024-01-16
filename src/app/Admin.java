@@ -7,6 +7,8 @@ import app.audio.Collections.Podcast;
 import app.audio.Files.AudioFile;
 import app.audio.Files.Episode;
 import app.audio.Files.Song;
+import app.pages.WrappedStatsArtist;
+import app.pages.WrappedStatsUser;
 import app.player.Player;
 import app.user.Announcement;
 import app.user.Artist;
@@ -15,6 +17,7 @@ import app.user.Host;
 import app.user.Merchandise;
 import app.user.User;
 import app.user.UserAbstract;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import fileio.input.CommandInput;
 import fileio.input.EpisodeInput;
 import fileio.input.PodcastInput;
@@ -38,6 +41,7 @@ import java.util.stream.Stream;
  * The type Admin.
  */
 public final class Admin {
+    @Getter
     private List<User> users = new ArrayList<>();
     @Getter
     private List<Artist> artists = new ArrayList<>();
@@ -872,5 +876,27 @@ public final class Admin {
             count++;
         }
         return topPlaylists;
+    }
+
+    public WrappedStatsArtist wrappedArtist(final String username) {
+        UserAbstract currentUser = getAbstractUser(username);
+        Artist artist = (Artist) currentUser;
+        WrappedStatsArtist stats = new WrappedStatsArtist(artist.getTopAlbums(),
+                                                                      artist.getTopSongs(),
+                                                                      artist.getTopFans(),
+                                                                      artist.getUniqueListeners(),
+                                                                      artist.getListeners());
+        return stats;
+    }
+
+    public WrappedStatsUser wrappedUser(final String username) {
+        UserAbstract currentUser = getAbstractUser(username);
+        User user = (User) currentUser;
+        WrappedStatsUser stats = new WrappedStatsUser(user.getTopAlbums(),
+                                                                      user.getTopSongs(),
+                                                                      user.getTopArtists(),
+                                                                      user.getTopEpisodes(),
+                                                                      user.getTopGenres());
+        return stats;
     }
 }

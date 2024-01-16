@@ -136,7 +136,7 @@ public final class Main {
                 case "getOnlineUsers" -> outputs.add(CommandRunner.getOnlineUsers(command));
                 case "showAlbums" -> outputs.add(CommandRunner.showAlbums(command));
                 case "showPodcasts" -> outputs.add(CommandRunner.showPodcasts(command));
-                case "wrapped" -> System.out.print("");
+                case "wrapped" -> outputs.add(CommandRunner.wrapped(command));
                 case "adBreak" -> System.out.print("");
                 case "buyPremium" -> System.out.print("");
                 case "cancelPremium" -> System.out.print("");

@@ -9,6 +9,7 @@ import app.audio.Collections.Album;
 import app.audio.Collections.AlbumOutput;
 import app.audio.Files.Song;
 import app.pages.ArtistPage;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 
 /**

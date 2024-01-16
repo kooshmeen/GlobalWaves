@@ -3,6 +3,8 @@ package app;
 import app.audio.Collections.AlbumOutput;
 import app.audio.Collections.PlaylistOutput;
 import app.audio.Collections.PodcastOutput;
+import app.pages.WrappedStatsArtist;
+import app.pages.WrappedStatsUser;
 import app.player.PlayerStats;
 import app.searchBar.Filters;
 import app.user.Artist;
@@ -779,6 +781,34 @@ public final class CommandRunner {
         objectNode.put("timestamp", commandInput.getTimestamp());
         objectNode.put("result", objectMapper.valueToTree(playlists));
 
+        return objectNode;
+    }
+
+    public static ObjectNode wrapped(final CommandInput commandInput) {
+        String username = commandInput.getUsername();
+        ObjectNode objectNode = objectMapper.createObjectNode();
+        objectNode.put("command", commandInput.getCommand());
+        objectNode.put("timestamp", commandInput.getTimestamp());
+        objectNode.put("user", username);
+        for (User user : admin.getUsers()) {
+            if (user.getUsername().equals(username)) {
+                WrappedStatsUser wrappedStatsUser = admin.wrappedUser(username);
+                objectNode.put("result", objectMapper.valueToTree(wrappedStatsUser));
+                return objectNode;
+            }
+        }
+        for (Artist artist : admin.getArtists()) {
+            if (artist.getUsername().equals(username)) {
+                WrappedStatsArtist wrappedStatsArtist = admin.wrappedArtist(username);
+                objectNode.put("result", objectMapper.valueToTree(wrappedStatsArtist));
+            }
+        }
+        for (Host host : admin.getHosts()) {
+            if (host.getUsername().equals(username)) {
+                objectNode.put("message", "User is not an artist");
+                return objectNode;
+            }
+        }
         return objectNode;
     }
 }
